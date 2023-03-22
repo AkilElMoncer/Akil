@@ -1,0 +1,71 @@
+using System;
+
+namespace NombreMagiqueConsole
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Random random = new Random();
+            int min = 1;
+            int max = 10;
+            int nombreMagique = random.Next(min, max) ;
+            int nombreDeVieConst = 4;
+            int nombreDeVie = nombreDeVieConst;
+
+
+
+
+            Console.WriteLine("Bienvenue");
+            Console.Write("Choisissez un nombre entre " +min+ " et " +max+ " , vous avez " +nombreDeVieConst+ " vies : ");
+
+            while (nombreDeVie > 0) {
+              //for (nombreDeVie = nombreDeVieConst; nombreDeVie > 0; nombreDeVie--) {
+
+                if (nombreDeVie < nombreDeVieConst) {
+                    if (nombreDeVie == 0) {
+                        break;
+                    }
+                    if (nombreDeVie == 1) {
+                        Console.Write("Rechoisissez un nombre entre " +min+ " et " +max+ " (ATTENTION, il vous reste " + nombreDeVie + " vie) : ");
+                    }
+                    else {
+                        Console.Write("Rechoisissez un nombre entre " +min+ " et " +max+ " (ATTENTION, il vous reste " + nombreDeVie + " vies) : ");
+                    }
+                }
+
+                String nombreChoisi = Console.ReadLine();
+
+                int nombreReel = 0;
+                
+                if (int.TryParse(nombreChoisi, out nombreReel)) {
+                    if (nombreReel > max || nombreReel < min) {
+                        Console.WriteLine("ERROR: Vous devez choisir un chiffre entre " +min+ " et " +max+ " , veuillez reessayer. ");
+                        nombreDeVie++;
+                    } else {
+                        if (nombreReel < nombreMagique){
+                            Console.WriteLine("Le nombre est trop petit.");
+                        } else if (nombreReel > nombreMagique) {
+                            Console.WriteLine("Le nombre est trop grand.");
+                        } else {
+                            Console.WriteLine("BRAVO vous avez trouvé le nombre magique.");
+                            break;
+                        }
+                    }
+                } else {
+                    Console.WriteLine("ERROR: vous devez ecrire des nombres!");
+                }
+                
+                Console.WriteLine("");
+                nombreDeVie--;
+
+
+               }
+                if (nombreDeVie == 0) {
+                Console.Write("GAME OVER, vous avez perdu!! le nombre magique etait " + nombreMagique);
+                
+
+            }
+        }
+    }
+}
