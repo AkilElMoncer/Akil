@@ -1,0 +1,156 @@
+using System;
+
+namespace MyApp {
+    class Mainclass {
+
+        //private static int GetOperation() {
+        //Random random1 = new Random();
+        //int operation = random1.Next(1, 4);
+        //return operation;
+        // }
+
+        private static int nombreDePartie = 10;
+        private static int nombreDeQuestionTotales = 10;
+        private static int nombreDePoint = 0;
+
+        
+        private static void DemanderAddition() {
+
+            int nombreDeQuestion = 0;
+            //int operation = GetOperation();
+            int min = 4;
+            int max = 15;
+            int c = 0;
+
+
+
+            while (nombreDePartie > 0)
+            {
+                Random random = new Random();
+                int a = random.Next(min, max);
+                int b = random.Next(min, max);
+                Random random1 = new Random();
+                int operation = random1.Next(1, 4);
+                nombreDeQuestion++;
+
+                if (operation == 1)
+                {
+                    //addition
+                    Console.Write("Question " + nombreDeQuestion + "/" + nombreDeQuestionTotales + ") " + a + " + " + b + " = ");
+                    c = a + b;
+                }
+                else if (operation == 2)
+                {
+                    //soustraction
+                    if (a < b)
+                    {
+                        int temp = a;
+                        a = b;
+                        b = temp;
+                    }
+                    Console.Write("Question " + nombreDeQuestion + "/" + nombreDeQuestionTotales + ") " + a + " - " + b + " = ");
+                    c = a - b;
+                }
+                else if (operation == 3)
+                {
+                    //multuplication 
+                    Console.Write("Question " + nombreDeQuestion + "/" + nombreDeQuestionTotales + ") " + a + " * " + b + " = ");
+                    c = a * b;
+                }
+
+
+
+                String reponseJoueur = Console.ReadLine();
+                int reponseReel = 0;
+
+                while (!int.TryParse(reponseJoueur, out reponseReel))
+                {
+                    Console.WriteLine("ERROR vous devez ecrire un nombre, veuillez reessayer");
+
+                    if (operation == 1) {
+                        Console.Write("Question " + nombreDeQuestion + "/" + nombreDeQuestionTotales + ") " + a + " + " + b + " = ");
+                    } else if (operation == 2){
+                        Console.Write("Question " + nombreDeQuestion + "/" + nombreDeQuestionTotales + ") " + a + " - " + b + " = ");
+                    } else if (operation == 3) {
+                        Console.Write("Question " + nombreDeQuestion + "/" + nombreDeQuestionTotales + ") " + a + " * " + b + " = ");
+                    }
+                    reponseJoueur = Console.ReadLine();
+                }
+                
+                    if (reponseReel == c)
+                    {
+                        nombreDePoint++;
+
+                        if (nombreDePartie - 1 == 0)
+                        {
+                            Console.WriteLine("BRAVO");
+                        }
+                        else
+                        {
+                            if (nombreDePartie - 1 == 1)
+                            {
+                                Console.WriteLine("BRAVO, il te reste encore " + (nombreDePartie - 1) + " question ");
+                            }
+                            else
+                            {
+                                Console.WriteLine("BRAVO, il te reste encore " + (nombreDePartie - 1) + " questions ");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (nombreDePartie - 1 == 0)
+                        {
+                            Console.WriteLine("Dommage c'est faux, la reponse etait " + c);
+                        }
+                        else
+                        {
+                            if (nombreDePartie - 1 == 1)
+                            {
+                                Console.WriteLine("Dommage c'est faux, la reponse etait " + c + " , il te reste encore " + (nombreDePartie - 1) + " question ");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Dommage c'est faux, la reponse etait " + c + ", il te reste encore " + (nombreDePartie - 1) + " questions ");
+                            }
+                        }
+                    }
+
+                nombreDePartie--;
+            }
+
+        }
+
+
+
+            private static void AfficherMention()
+            {
+                if (nombreDePartie == 0)
+                {
+                    if (nombreDePoint == nombreDeQuestionTotales)
+                    {
+                        Console.WriteLine("BRAVO, tu as finis le quizz, tu as gagner " + nombreDePoint + " points sur " + nombreDeQuestionTotales + " !!! ");
+                    }
+                    else if (nombreDePoint >= (nombreDeQuestionTotales / 2))
+                    {
+                        Console.WriteLine("Tu peux mieux faire, tu as finis le quizz, tu as gagner " + nombreDePoint + " points sur " + nombreDeQuestionTotales + " . ");
+                    }
+                    else if (nombreDePoint == 0)
+                    {
+                        Console.WriteLine("C'est très alarmant , tu as finis le quizz, tu as gagner " + nombreDePoint + " points sur " + nombreDeQuestionTotales + " . ");
+                    } else {
+                        Console.WriteLine("tu as encore beaucoup de proges a faire , tu as finis le quizz, tu as gagner " + nombreDePoint + " points sur " + nombreDeQuestionTotales + " . ");
+                     }
+                }
+
+            }
+            
+         
+     
+          static void Main(string[] args) {
+            DemanderAddition();
+            AfficherMention();
+           }
+        
+    }
+}
