@@ -1,0 +1,119 @@
+using System;
+using System.Collections.Generic;
+
+namespace PizzaObjetConsole 
+{
+    class classMain {
+
+        class Pizzas
+        {
+            string nom;
+            int prix;
+            string[] ingrédient;
+            static Pizzas dernierePizza;
+            static Pizzas pizzaLaPlusChere;
+            static Pizzas pizzaLaMoinsChere;
+
+            public Pizzas(string nom, int prix, string[] ingrédient)
+            {
+                this.nom = nom;
+                this.prix = prix;
+                this.ingrédient = ingrédient;
+                dernierePizza = this;
+
+                if (pizzaLaPlusChere == null)
+                {
+                    pizzaLaPlusChere = this;
+                }
+                else
+                {
+                    if (prix > pizzaLaPlusChere.prix)
+                    {
+                        pizzaLaPlusChere = this;
+                    }
+
+                }
+                if (pizzaLaMoinsChere == null)
+                {
+                    pizzaLaMoinsChere = this;
+                }
+                else
+                {
+                    if (prix < pizzaLaMoinsChere.prix)
+                    {
+                        pizzaLaMoinsChere = this;
+                    }
+
+                }
+            }
+
+            public void Afficher()
+            {
+                Console.WriteLine("Pizza : " + nom + "-" + prix + "€");
+                Console.WriteLine(string.Join(",", ingrédient));
+            }
+
+
+            public int GetPrix()
+            {
+                return prix;
+            }
+
+
+            public static void afficherDernierePizza()
+            {
+                if (dernierePizza == null)
+                {
+                    Console.Write("Erreur vous n'avez pas crée de pizza");
+                }
+                else
+                {
+                    Console.Write("La derniere pizza est: ");
+                    dernierePizza.Afficher();
+                }
+            }
+
+            public static void afficherPizzaLaPlusChereEtLaMoinsChere()
+            {
+                if (pizzaLaPlusChere != null)
+                {
+                    Console.WriteLine("***PIZZA LA PLUS CHERE***");
+                    pizzaLaPlusChere.Afficher();
+                }
+                if (pizzaLaMoinsChere != null)
+                {
+                    Console.WriteLine("***PIZZA LA MOINS CHERE***");
+                    pizzaLaMoinsChere.Afficher();
+                }
+            }
+        }
+        static void Main(string[] args) {
+
+            List<Pizzas> nomPizzas = new List<Pizzas>();
+
+
+            nomPizzas.Add(new Pizzas("Végétarienne", 11, new string[] { "Champignon", "salade", "mozarella", "poivron" }));
+            nomPizzas.Add(new Pizzas("Margharita", 44, new string[] { "Fromage", "salade", "tomate cerise", "creme fraiche" }));
+            nomPizzas.Add(new Pizzas("Hawaienne", 12, new string[] { "Ananas", "sauce tomate" }));
+            nomPizzas.Add(new Pizzas("Quatre fromage", 3, new string[] { "Cheddar", "fromage rape", "mozarella", "poivron" }));
+            nomPizzas.Add(new Pizzas("Mexicaine", 14, new string[] { "Piment", "tomate", "mozarella", "poivron" }));
+
+            nomPizzas.Sort((Pizzas x, Pizzas y) => {
+                return x.GetPrix().CompareTo(y.GetPrix());
+            });
+           
+          
+            foreach (Pizzas a in nomPizzas) {
+                a.Afficher();
+                Console.WriteLine(" ");
+            }
+
+            //Pizzas.afficherDernierePizza();
+            
+            //Console.Write("La pizza la moins chère est :");
+           // nomPizzas[0].Afficher();
+
+               // Pizzas.afficherPizzaLaPlusChereEtLaMoinsChere();
+        }
+    }
+}
